@@ -25,7 +25,9 @@ function divide(numA, numB) {
     return (numA / numB);
   };
 
-console.log(operate(numA, numB, operator));
+  
+operate(numA, numB, operator);
+
 
 function operate(numA, numB, operator) {
     if (operator === '+'){
@@ -38,6 +40,7 @@ function operate(numA, numB, operator) {
        console.log(divide(numA, numB));
  }
 }
+
 
 
 // const array = Array.from(input); 
