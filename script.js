@@ -8,54 +8,33 @@ const opButton = document.querySelectorAll('.operator');
 const clear = document.querySelector('#clear');
 clear.onclick = () => clearAll();
 
+const equals = document.querySelector('#equals');
+// equals.onclick = () => operate();
+
 let inputA = '';
 let operator = '';
 let inputB = '';
 
 
-// let inputA = prompt('enter one number'); 
-// let numA = parseInt(inputA, 0);
-// console.log(numA);
-   
-// // let operator = prompt('enter operator');
-// console.log(operator);
-
-// // let inputB = prompt('enter one number');
-// let numB = parseInt(inputB, 0);
-// console.log(numB);
-
-// function add(numA, numB) {  
-//     return (numA + numB);
-//   };
-
-// function subtract(numA, numB) {  
-//     return (numA - numB);
-//   };
-
-// function multiply(numA, numB) {  
-//     return (numA * numB);
-//   };
-
-// function divide(numA, numB) {  
-//     return (numA / numB);
-//   };
 
 numButton.forEach((numButton) => {
     numButton.addEventListener('click', () => { 
     inputA += numButton.textContent;
     digits.textContent = inputA;
+    console.log(inputA);
 
   });
 });
 
 
+
 opButton.forEach((opButton) => {
     opButton.addEventListener('click', () => { 
     operator = opButton.textContent;
+    console.log(operator);
     getInputB();
     });
   });
-
 
 
 function getInputB() {        
@@ -66,10 +45,16 @@ function getInputB() {
             }
         inputB += numButton.textContent;
         digits.textContent = inputB;
+        console.log(inputB);
      });
    });
 }
 
+equals.addEventListener('click', () => {
+    let numA = parseInt(inputA, 0);
+    let numB = parseInt(inputB, 0);
+    operate(numA, operator, numB);
+   });
 
 function clearDisplay() {
     digits.textContent ='';
@@ -82,72 +67,44 @@ function clearAll() {
     digits.textContent ='0';
     console.log(inputA, inputB, operator);
 }
+ 
+let result;
 
-  
-// operate(numA, numB, operator);
+function operate(numA, operator, numB) {
 
-
-function operate(numA, numB, operator) {
     if (operator === '+'){
-       console.log(add(numA, numB));  
+       result = sum;
+       
     } else if (operator === '-'){
-       console.log(subtract(numA, numB));
+       subtract(numA, numB);
     } else if (operator === '*'){
-       console.log(multiply(numA, numB));
+       multiply(numA, numB);
     } else if (operator === '/'){
-       console.log(divide(numA, numB));
- }
+       divide(numA, numB);
+    }
+    //  let final = String(result);
+     digits.textContent = result;
+    //  console.log(result);
 }
 
 
-
-// const array = Array.from(input); 
-// const newArray = [];
-
-// array.forEach(item => {
-//     newArray.push(parseInt(item));
-// });
-
-
-// function add(numA, numB) {
-//    const array = args[0]; 
-//    const sumValue = array.reduce(
-//     (numA, numB) => numA + numB,
-//   ); 
-//     return sumValue;
-// }
-
-// console.log(add(numA, numB));
-
-
-// function subtract(a,b) {
-//     const diffValue = newArray.reduce(
-//         (a, b) => a - b,
-//       ); 
-//         return diffValue;
-// }
-
-// console.log(subtract(newArray));
-
-
-// function mulitply(newArray) {
-//     const productValue = newArray.reduce(
-//         (a, b) => a * b,
-//       ); 
-//         return productValue;    
-// }
-
-// console.log(mulitply(newArray));
-
-
-// function divide() {
-//     const dividedValue = newArray.reduce(
-//         (a, b) => a / b,
-//       ); 
-//         return dividedValue;       
-// }
-
-// console.log(divide(newArray));
+let sum = function add(numA, numB) {  
+    return (numA + numB); 
+   };
  
-// const operators = ['+', '-', '*', '/'];
+ 
+ function subtract(numA, numB) {  
+     return result = (numA - numB);
+   };
+ 
+ function multiply(numA, numB) {  
+     return result = (numA * numB);
+   };
+ 
+ function divide(numA, numB) {  
+     return result = (numA / numB);
+   };
+ 
+
+// operate(numA, numB, operator);
 
