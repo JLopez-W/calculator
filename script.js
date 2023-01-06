@@ -1,12 +1,16 @@
 const numDisplay = document.querySelector('#display');
-const digits = document.createTextNode('');
+const digits = document.createElement('p');
 digits.textContent = '0';
 numDisplay.appendChild(digits);
 
 const numButton = document.querySelectorAll('.number');
-const operator = document.querySelectorAll('.operator');
+const opButton = document.querySelectorAll('.operator');
+const clear = document.querySelector('#clear');
+clear.onclick = () => clearAll();
 
 let inputA = '';
+let operator = '';
+let inputB = '';
 
 
 // let inputA = prompt('enter one number'); 
@@ -40,9 +44,44 @@ numButton.forEach((numButton) => {
     numButton.addEventListener('click', () => { 
     inputA += numButton.textContent;
     digits.textContent = inputA;
-    digits.appendChild(inputA);
+
   });
 });
+
+
+opButton.forEach((opButton) => {
+    opButton.addEventListener('click', () => { 
+    operator = opButton.textContent;
+    getInputB();
+    });
+  });
+
+
+
+function getInputB() {        
+      numButton.forEach((numButton) => {
+        numButton.addEventListener('click', () => { 
+            if (digits.textContent === inputA) {
+                clearDisplay();
+            }
+        inputB += numButton.textContent;
+        digits.textContent = inputB;
+     });
+   });
+}
+
+
+function clearDisplay() {
+    digits.textContent ='';
+}
+
+function clearAll() {
+    inputA ='';
+    inputB ='';
+    operator ='';
+    digits.textContent ='0';
+    console.log(inputA, inputB, operator);
+}
 
   
 // operate(numA, numB, operator);
