@@ -1,35 +1,51 @@
 const numDisplay = document.querySelector('#display');
-numDisplay.textContent = '0';
+const digits = document.createTextNode('');
+digits.textContent = '0';
+numDisplay.appendChild(digits);
+
+const numButton = document.querySelectorAll('.number');
+const operator = document.querySelectorAll('.operator');
+
+let inputA = '';
+
 
 // let inputA = prompt('enter one number'); 
-let numA = parseInt(inputA, 0);
-console.log(numA);
+// let numA = parseInt(inputA, 0);
+// console.log(numA);
    
-// let operator = prompt('enter operator');
-console.log(operator);
+// // let operator = prompt('enter operator');
+// console.log(operator);
 
-// let inputB = prompt('enter one number');
-let numB = parseInt(inputB, 0);
-console.log(numB);
+// // let inputB = prompt('enter one number');
+// let numB = parseInt(inputB, 0);
+// console.log(numB);
 
-function add(numA, numB) {  
-    return (numA + numB);
-  };
+// function add(numA, numB) {  
+//     return (numA + numB);
+//   };
 
-function subtract(numA, numB) {  
-    return (numA - numB);
-  };
+// function subtract(numA, numB) {  
+//     return (numA - numB);
+//   };
 
-function multiply(numA, numB) {  
-    return (numA * numB);
-  };
+// function multiply(numA, numB) {  
+//     return (numA * numB);
+//   };
 
-function divide(numA, numB) {  
-    return (numA / numB);
-  };
+// function divide(numA, numB) {  
+//     return (numA / numB);
+//   };
+
+numButton.forEach((numButton) => {
+    numButton.addEventListener('click', () => { 
+    inputA += numButton.textContent;
+    digits.textContent = inputA;
+    digits.appendChild(inputA);
+  });
+});
 
   
-operate(numA, numB, operator);
+// operate(numA, numB, operator);
 
 
 function operate(numA, numB, operator) {
