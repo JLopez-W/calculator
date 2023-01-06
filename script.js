@@ -1,11 +1,14 @@
-let inputA = prompt('enter one number'); 
+const numDisplay = document.querySelector('#display');
+numDisplay.textContent = '0';
+
+// let inputA = prompt('enter one number'); 
 let numA = parseInt(inputA, 0);
 console.log(numA);
    
-let operator = prompt('enter operator');
+// let operator = prompt('enter operator');
 console.log(operator);
 
-let inputB = prompt('enter one number');
+// let inputB = prompt('enter one number');
 let numB = parseInt(inputB, 0);
 console.log(numB);
 
