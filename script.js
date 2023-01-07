@@ -36,7 +36,19 @@ numButton.forEach((numButton) => {
 
 opButton.forEach((opButton) => {
   opButton.addEventListener('click', () => {
-    operator = opButton.textContent;
+    if (inputB) {
+      numA = parseInt(inputA, 0);
+      numB = parseInt(inputB, 0);
+      operate(operator, numA, numB);
+      numA = result;
+      inputA = result;
+      digits.textContent = result; 
+      numB = 0;
+      inputB = '';
+      operator = opButton.textContent;
+    } else {
+      operator = opButton.textContent;
+    }
   });
 });
 
