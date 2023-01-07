@@ -11,92 +11,102 @@ clear.onclick = () => clearAll();
 const equals = document.querySelector('#equals');
 
 let inputA = '';
-let operator ='';
+let operator = '';
 let inputB = '';
 let numA;
 let numB;
-let sum;
+let sum = 0;
+let difference = 0;
+let product = 0;
+let quotient = 0;
 let finalResult = 0;
 
 
 
 numButton.forEach((numButton) => {
-    numButton.addEventListener('click', () => { 
-      if (operator === ''){
-        inputA += numButton.textContent;   
-        digits.textContent = inputA;  
-        console.log(inputA);
-      } else {
-        inputB += numButton.textContent;
-        digits.textContent = inputB;
-        console.log(inputB);
-      }
+  numButton.addEventListener('click', () => {
+    if (operator === '') {
+      inputA += numButton.textContent;
+      digits.textContent = inputA;
+      console.log(inputA);
+    } else {
+      inputB += numButton.textContent;
+      digits.textContent = inputB;
+      console.log(inputB);
+    }
   });
 });
 
 
 opButton.forEach((opButton) => {
-    opButton.addEventListener('click', () => { 
+  opButton.addEventListener('click', () => {
     operator = opButton.textContent;
-    });
   });
+});
 
 
 equals.addEventListener('click', () => {
-    numA = parseInt(inputA, 0);
-    numB = parseInt(inputB, 0);
-    operate(operator, numA, numB);
-    checkResult();
-    digits.textContent = finalResult;
-    console.log(finalResult);
-  });
+  numA = parseInt(inputA, 0);
+  numB = parseInt(inputB, 0);
+  operate(operator, numA, numB);
+  checkResult();
+  digits.textContent = finalResult;
+  console.log(finalResult);
+});
 
 
 function operate(operator, numA, numB) {
 
-    if (operator === '+'){
-       add(numA, numB); 
-       return sum;
-    } else if (operator === '-'){
-       subtract(numA, numB);
-    } else if (operator === '*'){
-       multiply(numA, numB);
-    } else if (operator === '/'){
-       divide(numA, numB);
-    }
+  if (operator === '+') {
+    add(numA, numB);
+    return sum;
+  } else if (operator === '-') {
+    subtract(numA, numB);
+    return difference;
+  } else if (operator === 'x') {
+    multiply(numA, numB);
+    return product;
+  } else if (operator === '÷') {
+    divide(numA, numB);
+    return quotient;
+  }
 }
 
-function add(numA, numB) {  
+function add(numA, numB) {
   sum = (numA + numB);
- };
+};
 
-function subtract(numA, numB) {  
-   return result = (numA - numB);
- };
+function subtract(numA, numB) {
+  difference = (numA - numB);
+};
 
-function multiply(numA, numB) {  
-   return result = (numA * numB);
- };
+function multiply(numA, numB) {
+  product = (numA * numB);
+};
 
-function divide(numA, numB) {  
-   return result = (numA / numB);
- };
+function divide(numA, numB) {
+  quotient = (numA / numB);
+};
 
 function checkResult() {
-  return finalResult += sum;
- }
+  finalResult += sum;
+  finalResult += difference;
+  finalResult += product;
+  finalResult += quotient;
+  return finalResult;
+}
 
 function clearDisplay() {
-  digits.textContent ='';
+  digits.textContent = '';
 }
 
 function clearAll() {
-  inputA ='';
-  inputB ='';
-  operator ='';
-  result = 0;
-  digits.textContent ='0';
+  inputA = '';
+  inputB = '';
+  operator = '';
+  sum = 0;
+  difference = 0;
+  finalResult = 0;
+  digits.textContent = '0';
   console.log(inputA, inputB, operator);
 }
-
-
