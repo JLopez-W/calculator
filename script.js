@@ -18,6 +18,22 @@ let numB = 0;
 let result = 0;
 
 
+negButton.addEventListener('click', () => {
+  if (operator === '' && (!inputA.includes('-'))) {
+      inputA = '-'+inputA;
+      digits.textContent = inputA;
+  } else if (operator === '' && (inputA.includes('-'))) {
+      inputA = inputA.slice(1);
+      digits.textContent = inputA;
+  } else if (operator && (!inputB.includes('-'))) {
+      inputB = '-'+inputB;
+      digits.textContent = inputB;
+  } else if (operator === '' && (inputB.includes('-'))) {
+      inputB = inputB.slice(1);
+      digits.textContent = inputB;
+   }
+});
+
 
 numButton.forEach((numButton) => {
   numButton.addEventListener('click', () => {
@@ -126,4 +142,5 @@ function clearAll() {
   digits.textContent = '0';
   console.log(inputA, inputB, operator);
 }
+
 
