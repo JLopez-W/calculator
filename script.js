@@ -106,6 +106,8 @@ function clearAll() {
   operator = '';
   sum = 0;
   difference = 0;
+  product = 0;
+  quotient = 0;
   finalResult = 0;
   digits.textContent = '0';
   console.log(inputA, inputB, operator);
