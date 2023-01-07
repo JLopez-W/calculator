@@ -57,8 +57,8 @@ equals.addEventListener('click', () => {
   numA = parseInt(inputA, 0);
   numB = parseInt(inputB, 0);
   operate(operator, numA, numB);
-  digits.textContent = finalResult;
-  console.log(finalResult);
+  digits.textContent = result;
+  console.log(result);
 });
 
 
@@ -66,49 +66,48 @@ function operate(operator, numA, numB) {
 
   if (operator === '+') {
     add(numA, numB);
-    return sum;
+    return result;
   } else if (operator === '-') {
     subtract(numA, numB);
-    return difference;
+    return result;
   } else if (operator === 'x') {
     multiply(numA, numB);
-    return product;
+    return result;
   } else if (operator === '÷') {
     divide(numA, numB);
-    return quotient;
+    return result;
   }
 }
 
 function add(numA, numB) {
-  sum = (numA + numB);
+  result = (numA + numB);
 };
 
 function subtract(numA, numB) {
-  difference = (numA - numB);
+  result = (numA - numB);
 };
 
 function multiply(numA, numB) {
-  product = (numA * numB);
+  result = (numA * numB);
 };
 
 function divide(numA, numB) {
-  quotient = (numA / numB);
+  result = (numA / numB);
 };
 
 
 function clearDisplay() {
-  digits.textContent = '';
+  digits.textContent = '0';
 }
 
 function clearAll() {
   inputA = '';
   inputB = '';
+  numA = 0;
+  numB = 0;
   operator = '';
-  sum = 0;
-  difference = 0;
-  product = 0;
-  quotient = 0;
-  finalResult = 0;
+  result = 0;
   digits.textContent = '0';
   console.log(inputA, inputB, operator);
 }
+
