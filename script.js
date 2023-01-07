@@ -83,7 +83,7 @@ function add(numA, numB) {
   if ((numA + numB).isInteger) {
     result = (numA + numB)
   } else {
-    result = (numA + numB).toFixed(16)
+    result = (numA + numB).toFixed(16) * 1
   }
 };
 
@@ -91,7 +91,7 @@ function subtract(numA, numB) {
   if ((numA - numB).isInteger) {
     result = (numA - numB)
   } else {
-    result = (numA - numB).toFixed(16)
+    result = (numA - numB).toFixed(16) * 1
   }
 };
 
@@ -99,7 +99,7 @@ function multiply(numA, numB) {
   if ((numA * numB).isInteger) {
     result = (numA * numB)
   } else {
-    result = (numA * numB).toFixed(16)
+    result = (numA * numB).toFixed(16) * 1
   }
 };
 
@@ -107,7 +107,7 @@ function divide(numA, numB) {
   if ((numA / numB).isInteger) {
     result = (numA / numB)
   } else {
-    result = (numA / numB).toFixed(16)
+    result = (numA / numB).toFixed(16) * 1
   }
 };
 
