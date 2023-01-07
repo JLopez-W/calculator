@@ -57,7 +57,6 @@ equals.addEventListener('click', () => {
   numA = parseInt(inputA, 0);
   numB = parseInt(inputB, 0);
   operate(operator, numA, numB);
-  checkResult();
   digits.textContent = finalResult;
   console.log(finalResult);
 });
@@ -96,13 +95,6 @@ function divide(numA, numB) {
   quotient = (numA / numB);
 };
 
-function checkResult() {
-  finalResult += sum;
-  finalResult += difference;
-  finalResult += product;
-  finalResult += quotient;
-  return finalResult;
-}
 
 function clearDisplay() {
   digits.textContent = '';
