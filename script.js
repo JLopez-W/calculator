@@ -37,8 +37,8 @@ numButton.forEach((numButton) => {
 opButton.forEach((opButton) => {
   opButton.addEventListener('click', () => {
     if (inputB) {
-      numA = parseInt(inputA, 0);
-      numB = parseInt(inputB, 0);
+      numA = parseFloat(inputA, 0);
+      numB = parseFloat(inputB, 0);
       operate(operator, numA, numB);
       numA = result;
       inputA = result;
@@ -54,8 +54,8 @@ opButton.forEach((opButton) => {
 
 
 equals.addEventListener('click', () => {
-  numA = parseInt(inputA, 0);
-  numB = parseInt(inputB, 0);
+  numA = parseFloat(inputA, 0);
+  numB = parseFloat(inputB, 0);
   operate(operator, numA, numB);
   digits.textContent = result;
   console.log(result);
@@ -80,19 +80,35 @@ function operate(operator, numA, numB) {
 }
 
 function add(numA, numB) {
-  result = (numA + numB);
+  if ((numA + numB).isInteger) {
+    result = (numA + numB)
+  } else {
+    result = (numA + numB).toFixed(16)
+  }
 };
 
 function subtract(numA, numB) {
-  result = (numA - numB);
+  if ((numA - numB).isInteger) {
+    result = (numA - numB)
+  } else {
+    result = (numA - numB).toFixed(16)
+  }
 };
 
 function multiply(numA, numB) {
-  result = (numA * numB);
+  if ((numA * numB).isInteger) {
+    result = (numA * numB)
+  } else {
+    result = (numA * numB).toFixed(16)
+  }
 };
 
 function divide(numA, numB) {
-  result = (numA / numB);
+  if ((numA / numB).isInteger) {
+    result = (numA / numB)
+  } else {
+    result = (numA / numB).toFixed(16)
+  }
 };
 
 
