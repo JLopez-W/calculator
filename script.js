@@ -13,13 +13,9 @@ const equals = document.querySelector('#equals');
 let inputA = '';
 let operator = '';
 let inputB = '';
-let numA;
-let numB;
-let sum = 0;
-let difference = 0;
-let product = 0;
-let quotient = 0;
-let finalResult = 0;
+let numA = 0;
+let numB = 0;
+let result = 0;
 
 
 
