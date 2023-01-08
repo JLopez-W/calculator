@@ -3,6 +3,7 @@ const digits = document.createTextNode('0');
 digits.className = 'text';
 numDisplay.appendChild(digits);
 
+
 const numButton = document.querySelectorAll('.number');
 const opButton = document.querySelectorAll('.operator');
 const clear = document.querySelector('#clear');
@@ -111,7 +112,13 @@ equals.addEventListener('click', () => {
   } else if (numA && operator ==='' && inputB === '') {
     result = numA;
     digits.textContent = result;
-  } else if (numA && operator && numB) {
+  } else if (operator === '÷' && numB === 0) {
+    result = 'always and forever'
+    digits.textContent = result;
+  } else if (numA === 0 && operator ==='÷') {
+    result = 'Really? \n If you have ZERO cookies to share with your friends, \n how many cookies does everyone get?';
+    digits.textContent = result;
+  } else if (numA && numB) {
     operate(operator, numA, numB);
     digits.textContent = result;
     console.log(result);
