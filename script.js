@@ -163,7 +163,7 @@ function operate(operator, numA, numB) {
   } else if (operator === 'x') {
     multiply(numA, numB);
     return result;
-  } else if (operator === '÷') {
+  } else if (operator === '/') {
     divide(numA, numB);
     return result;
   }
