@@ -20,6 +20,7 @@ let numB = 0;
 let result = 0;
 
 
+
 negButton.addEventListener('click', () => {
   if (operator === '' && (!inputA.includes('-'))) {
       inputA = '-'+inputA;
@@ -36,6 +37,7 @@ negButton.addEventListener('click', () => {
    }
 });
 
+
 decimal.addEventListener('click', clickOnce);
 function removeHandler() {
   decimal.removeEventListener('click', clickOnce);
@@ -49,18 +51,32 @@ function clickOnce() {
     digits.textContent = inputB;
   } else {
    removeHandler();
-}
+ }
 }
 
+
+function limitInputA() {
+  if(inputA.length > 11) {
+      inputA = inputA.substring(0, 12);
+  }
+}
+
+function limitInputB() {
+  if(inputB.length > 11) {
+      inputB = inputB.substring(0, 12);
+  }
+}
 
 numButton.forEach((numButton) => {
   numButton.addEventListener('click', () => {
     if (operator === '') {
       inputA += numButton.textContent;
+      limitInputA();
       digits.textContent = inputA;
       console.log(inputA);
     } else {
       inputB += numButton.textContent;
+      limitInputB()
       digits.textContent = inputB;
       console.log(inputB);
     }
