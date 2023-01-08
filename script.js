@@ -11,6 +11,7 @@ clear.onclick = () => clearAll();
 
 const decimal = document.querySelector('#decimal');
 const negButton = document.querySelector('#posNeg');
+const percent = document.querySelector('#percent');
 const equals = document.querySelector('#equals');
 
 let inputA = '';
@@ -55,16 +56,26 @@ function clickOnce() {
  }
 }
 
+percent.addEventListener('click', () => {
+  if (inputA && operator ==='') {
+    inputA = parseFloat(inputA) / 100;
+    digits.textContent = inputA; 
+  } else if (inputB) {
+    inputB = parseFloat(inputB) / 100;
+    digits.textContent = inputB; 
+  }   
+});
+
 
 function limitInputA() {
   if(inputA.length > 11) {
-      inputA = inputA.substring(0, 12);
+      inputA = inputA.substring(0, 16);
   }
 }
 
 function limitInputB() {
   if(inputB.length > 11) {
-      inputB = inputB.substring(0, 12);
+      inputB = inputB.substring(0, 16);
   }
 }
 
@@ -116,12 +127,14 @@ equals.addEventListener('click', () => {
     result = 'always and forever'
     digits.textContent = result;
   } else if (numA === 0 && operator ==='÷') {
-    result = 'Really? \n If you have ZERO cookies to share with your friends, \n how many cookies does everyone get?';
+    result = 'Really?';
     digits.textContent = result;
   } else if (numA && numB) {
     operate(operator, numA, numB);
-    digits.textContent = result;
-    console.log(result);
+     if (result.toString().length > 16) {
+        result = 'that\'s too hard';
+        digits.textContent = result;
+        } else digits.textContent = result;
   } else {
     digits.textContent = '???';
   }
