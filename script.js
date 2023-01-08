@@ -8,6 +8,8 @@ const opButton = document.querySelectorAll('.operator');
 const clear = document.querySelector('#clear');
 clear.onclick = () => clearAll();
 
+const decimal = document.querySelector('#decimal');
+const negButton = document.querySelector('#posNeg');
 const equals = document.querySelector('#equals');
 
 let inputA = '';
@@ -33,6 +35,22 @@ negButton.addEventListener('click', () => {
       digits.textContent = inputB;
    }
 });
+
+decimal.addEventListener('click', clickOnce);
+function removeHandler() {
+  decimal.removeEventListener('click', clickOnce);
+}
+function clickOnce() {
+  if (operator === '' && (!inputA.includes('.'))) {
+    inputA += '.';
+    digits.textContent = inputA;
+  } else if (operator && (!inputB.includes('.'))) {
+    inputB += '.';
+    digits.textContent = inputB;
+  } else {
+   removeHandler();
+}
+}
 
 
 numButton.forEach((numButton) => {
@@ -99,7 +117,7 @@ function add(numA, numB) {
   if ((numA + numB).isInteger) {
     result = (numA + numB)
   } else {
-    result = (numA + numB).toFixed(16) * 1
+    result = (numA + numB).toFixed(10) * 1
   }
 };
 
@@ -107,7 +125,7 @@ function subtract(numA, numB) {
   if ((numA - numB).isInteger) {
     result = (numA - numB)
   } else {
-    result = (numA - numB).toFixed(16) * 1
+    result = (numA - numB).toFixed(10) * 1
   }
 };
 
@@ -115,7 +133,7 @@ function multiply(numA, numB) {
   if ((numA * numB).isInteger) {
     result = (numA * numB)
   } else {
-    result = (numA * numB).toFixed(16) * 1
+    result = (numA * numB).toFixed(10) * 1
   }
 };
 
@@ -123,7 +141,7 @@ function divide(numA, numB) {
   if ((numA / numB).isInteger) {
     result = (numA / numB)
   } else {
-    result = (numA / numB).toFixed(16) * 1
+    result = (numA / numB).toFixed(10) * 1
   }
 };
 
@@ -140,7 +158,6 @@ function clearAll() {
   operator = '';
   result = 0;
   digits.textContent = '0';
+  decimal.addEventListener('click', clickOnce);
   console.log(inputA, inputB, operator);
 }
-
-
