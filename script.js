@@ -13,6 +13,7 @@ const decimal = document.querySelector('#decimal');
 const negButton = document.querySelector('#posNeg');
 const percent = document.querySelector('#percent');
 const equals = document.querySelector('#equals');
+const backspace = document.querySelector('#backspace');
 
 let inputA = '';
 let operator = '';
@@ -63,6 +64,17 @@ percent.addEventListener('click', () => {
   } else if (inputB) {
     inputB = parseFloat(inputB) / 100;
     digits.textContent = inputB; 
+  }   
+});
+
+backspace.addEventListener('click', () => {
+  digits.textContent.slice(-1);
+  if (inputA && operator ==='') {
+      inputA = inputA.slice(0, -1);
+      digits.textContent = inputA;
+  } else if (inputB) {
+      inputB = inputB.slice(0, -1);
+      digits.textContent = inputB; 
   }   
 });
 
