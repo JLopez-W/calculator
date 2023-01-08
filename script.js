@@ -90,14 +90,22 @@ opButton.forEach((opButton) => {
 equals.addEventListener('click', () => {
   numA = parseFloat(inputA, 0);
   numB = parseFloat(inputB, 0);
-  operate(operator, numA, numB);
-  digits.textContent = result;
-  console.log(result);
+  if (inputA ==='' && inputB ==='') {
+    digits.textContent = '0';
+  } else if (numA && operator ==='' && inputB === '') {
+    result = numA;
+    digits.textContent = result;
+  } else if (numA && operator && numB) {
+    operate(operator, numA, numB);
+    digits.textContent = result;
+    console.log(result);
+  } else {
+    digits.textContent = '???';
+  }
 });
 
 
 function operate(operator, numA, numB) {
-
   if (operator === '+') {
     add(numA, numB);
     return result;
