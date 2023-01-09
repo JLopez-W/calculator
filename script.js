@@ -59,17 +59,29 @@ function clickOnce() {
 
 percent.addEventListener('click', () => {
   if (inputA && operator ==='') {
-    inputA = parseFloat(inputA) / 100;
-    digits.textContent = inputA; 
-  } else if (inputB && (operator === '+' || '-')) {
+    if (inputA === '0') {
+       inputA = parseFloat(inputA);
+       digits.textContent = inputA;
+     } else {
+       inputA = parseFloat(inputA) / 100;
+       digits.textContent = inputA;
+     }
+  } else if (inputB === '0') {
+       numA = 0;
+  } else if (result) {
+      inputA = parseFloat(result) / 100;
+      numA = inputA;
+      inputB = '';
+      result = 0;
+      digits.textContent = inputA;
+  } else if ((operator === '+' || operator === '-') && inputB) {
     inputB = parseFloat(inputB) / inputA;
-    digits.textContent = inputB; 
-  } else if (inputB && (operator === 'x' || '/')) {
+    digits.textContent = inputB;
+  } else if ((operator === 'x' || operator === '/') && inputB) {
     inputB = parseFloat(inputB) / 100;
     digits.textContent = inputB; 
+  
   }
-  //need to fix percentage of result, 
-  //percentage as new input before equalse
 });
 
 backspace.addEventListener('click', () => {
@@ -148,16 +160,15 @@ equals.addEventListener('click', () => {
     digits.textContent = result;
   } else if (result && operator) {
     numA = result;
-    numB = inputB;
     operate(operator, numA, numB);
     digits.textContent = result;
   } else if (operator === '/' && numB === 0) {
     result = 'always and forever'
     digits.textContent = result;
-  } else if (numA === 0 && operator === '/') {
+  } else if ((numA === 0 && operator === '/') || ((numA === 0 || numB === 0) && (operator === 'x'))) {
     result = 0;
     digits.textContent = result;
-  } else if (numA && numB) {
+  } else if (numA && operator && numB) {
     operate(operator, numA, numB);
      if (result.toString().length > 16) {
         result = 'that\'s too hard';
@@ -167,6 +178,7 @@ equals.addEventListener('click', () => {
     digits.textContent = '???';
   }
 });
+// fix NaN
 
 
 function operate(operator, numA, numB) {
