@@ -68,6 +68,8 @@ percent.addEventListener('click', () => {
     inputB = parseFloat(inputB) / 100;
     digits.textContent = inputB; 
   }
+  //need to fix percentage of result, 
+  //percentage as new input before equalse
 });
 
 backspace.addEventListener('click', () => {
@@ -120,8 +122,8 @@ numButton.forEach((numButton) => {
 opButton.forEach((opButton) => {
   opButton.addEventListener('click', () => {
     if (inputB) {
-      numA = parseFloat(inputA, 0);
-      numB = parseFloat(inputB, 0);
+      numA = parseFloat(inputA);
+      numB = parseFloat(inputB);
       operate(operator, numA, numB);
       numA = result;
       inputA = result;
@@ -137,8 +139,8 @@ opButton.forEach((opButton) => {
 
 
 equals.addEventListener('click', () => {
-  numA = parseFloat(inputA, 0);
-  numB = parseFloat(inputB, 0);
+  numA = parseFloat(inputA);
+  numB = parseFloat(inputB);
   if (inputA ==='') {
     digits.textContent = '0';
   } else if (numA && operator ==='' && inputB === '') {
@@ -151,6 +153,9 @@ equals.addEventListener('click', () => {
     digits.textContent = result;
   } else if (operator === '/' && numB === 0) {
     result = 'always and forever'
+    digits.textContent = result;
+  } else if (numA === 0 && operator === '/') {
+    result = 0;
     digits.textContent = result;
   } else if (numA && numB) {
     operate(operator, numA, numB);
