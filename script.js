@@ -61,21 +61,30 @@ percent.addEventListener('click', () => {
   if (inputA && operator ==='') {
     inputA = parseFloat(inputA) / 100;
     digits.textContent = inputA; 
-  } else if (inputB) {
+  } else if (inputB && (operator === '+' || '-')) {
+    inputB = parseFloat(inputB) / inputA;
+    digits.textContent = inputB; 
+  } else if (inputB && (operator === 'x' || '/')) {
     inputB = parseFloat(inputB) / 100;
     digits.textContent = inputB; 
-  }   
+  }
 });
 
 backspace.addEventListener('click', () => {
-  digits.textContent.slice(-1);
   if (inputA && operator ==='') {
       inputA = inputA.slice(0, -1);
       digits.textContent = inputA;
-  } else if (inputB) {
+  } else if (inputB && result === 0) {
       inputB = inputB.slice(0, -1);
       digits.textContent = inputB; 
-  }   
+  } else if (result) {
+      result = result.toString().slice(0, -1);
+      digits.textContent = result;
+      result = parseFloat(result);
+      inputA = result;
+      inputB = '';
+      digits.textContent = inputA;
+  }
 });
 
 
@@ -130,16 +139,18 @@ opButton.forEach((opButton) => {
 equals.addEventListener('click', () => {
   numA = parseFloat(inputA, 0);
   numB = parseFloat(inputB, 0);
-  if (inputA ==='' && inputB ==='') {
+  if (inputA ==='') {
     digits.textContent = '0';
   } else if (numA && operator ==='' && inputB === '') {
     result = numA;
     digits.textContent = result;
-  } else if (operator === '÷' && numB === 0) {
-    result = 'always and forever'
+  } else if (result && operator) {
+    numA = result;
+    numB = inputB;
+    operate(operator, numA, numB);
     digits.textContent = result;
-  } else if (numA === 0 && operator ==='÷') {
-    result = 'Really?';
+  } else if (operator === '/' && numB === 0) {
+    result = 'always and forever'
     digits.textContent = result;
   } else if (numA && numB) {
     operate(operator, numA, numB);
