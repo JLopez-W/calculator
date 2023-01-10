@@ -155,9 +155,14 @@ equals.addEventListener('click', () => {
   numB = parseFloat(inputB);
   if (inputA ==='') {
     digits.textContent = '0';
-  } else if (numA && operator ==='' && inputB === '') {
+  } else if (numA && operator === '' && inputB === '') {
     result = numA;
     digits.textContent = result;
+  } else if (numA && operator && inputB === '') {
+    numB = numA;
+    operate(operator, numA, numB);
+    digits.textContent = result;
+    inputB = numB;
   } else if (result && operator) {
     numA = result;
     operate(operator, numA, numB);
@@ -168,6 +173,11 @@ equals.addEventListener('click', () => {
   } else if ((numA === 0 && operator === '/') || ((numA === 0 || numB === 0) && (operator === 'x'))) {
     result = 0;
     digits.textContent = result;
+  } else if (isNaN(numB) && operator) {
+    numB = numA;
+    operate(operator, numA, numB);
+    // digits.textContent = result;
+    // numB = numB.toString();
   } else if (numA && operator && numB) {
     operate(operator, numA, numB);
      if (result.toString().length > 16) {
@@ -178,7 +188,9 @@ equals.addEventListener('click', () => {
     digits.textContent = '???';
   }
 });
-// fix NaN
+// fix NaN - need to get numB back to NaN for condition to work on second equals click
+
+
 
 
 function operate(operator, numA, numB) {
