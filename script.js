@@ -47,10 +47,18 @@ function removeHandler() {
 }
 function clickOnce() {
   if (operator === '' && (!inputA.includes('.'))) {
+     if (inputA ==='') {
+      inputA += '0.';
+     } else {
     inputA += '.';
-    digits.textContent = inputA;
+     }
+    digits.textContent = inputA;  
   } else if (operator && (!inputB.includes('.'))) {
-    inputB += '.';
+    if (inputB ==='') {
+        inputB += '0.';
+     } else {
+        inputB += '.';
+     }
     digits.textContent = inputB;
   } else {
    removeHandler();
