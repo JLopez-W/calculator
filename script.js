@@ -10,7 +10,7 @@ const clear = document.querySelector('#clear');
 clear.onclick = () => clearAll();
 
 const decimal = document.querySelector('#decimal');
-const negButton = document.querySelector('#posNeg');
+const posNegButton = document.querySelector('#posNeg');
 const percent = document.querySelector('#percent');
 const equals = document.querySelector('#equals');
 const backspace = document.querySelector('#backspace');
@@ -24,7 +24,7 @@ let result = 0;
 
 
 
-negButton.addEventListener('click', () => {
+posNegButton.addEventListener('click', () => {
   if (operator === '' && (!inputA.includes('-'))) {
       inputA = '-'+inputA;
       digits.textContent = inputA;
@@ -39,7 +39,7 @@ negButton.addEventListener('click', () => {
       digits.textContent = inputB;
    }
 });
-
+// triggering an operation if pressed after result
 
 decimal.addEventListener('click', clickOnce);
 function removeHandler() {
@@ -92,6 +92,7 @@ percent.addEventListener('click', () => {
   }
 });
 
+
 backspace.addEventListener('click', () => {
   if (inputA && operator ==='') {
       inputA = inputA.slice(0, -1);
@@ -124,14 +125,17 @@ function limitInputB() {
 
 numButton.forEach((numButton) => {
   numButton.addEventListener('click', () => {
-    if (operator === '') {
+     if (result) {
+       clearAll();
+     } 
+     if (operator === '') {
       inputA += numButton.textContent;
       limitInputA();
       digits.textContent = inputA;
-      console.log(inputA);
+      console.log(inputA); 
     } else {
       inputB += numButton.textContent;
-      limitInputB()
+      limitInputB();
       digits.textContent = inputB;
       console.log(inputB);
     }
@@ -181,11 +185,8 @@ equals.addEventListener('click', () => {
   } else if ((numA === 0 && operator === '/') || ((numA === 0 || numB === 0) && (operator === 'x'))) {
     result = 0;
     digits.textContent = result;
-  } else if (isNaN(numB) && operator) {
-    numB = numA;
-    operate(operator, numA, numB);
-    // digits.textContent = result;
-    // numB = numB.toString();
+  } else if (isNaN(numB)) {
+    digits.textContent = 'having trouble?';
   } else if (numA && operator && numB) {
     operate(operator, numA, numB);
      if (result.toString().length > 16) {
@@ -196,8 +197,6 @@ equals.addEventListener('click', () => {
     digits.textContent = '???';
   }
 });
-// fix NaN - need to get numB back to NaN for condition to work on second equals click
-
 
 
 
