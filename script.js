@@ -155,14 +155,16 @@ numButton.forEach((numButton) => {
     }
   });
 });
-// if there's a result and equals is true, ->
-//inputB/numB = 0; new input = inputA; operator ='';, equals =false;
-
-// now adding another equals after first equals doesn't work (result + num = .....)
 
 opButton.forEach((opButton) => {
   opButton.addEventListener('click', () => {
-  if (inputB) {
+  if (inputB && result) {
+      inputA = result;
+      inputB = '';
+      numB = 0;
+      operator = opButton.textContent;
+      equalsClicked = false;
+  } else if (inputB) {
       numA = parseFloat(inputA);
       numB = parseFloat(inputB);
       operate(operator, numA, numB);
