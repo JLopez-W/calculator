@@ -23,6 +23,7 @@ let numB = 0;
 let result = 0;
 let tempInput = '';
 let equalsClicked = false;
+let percentClicked = false;
 
 
 
@@ -102,6 +103,7 @@ percent.addEventListener('click', () => {
     digits.textContent = inputB; 
   
   }
+  percentClicked = true;
 });
 
 
@@ -142,11 +144,12 @@ numButton.forEach((numButton) => {
       limitInputA();
       digits.textContent = inputA;
       console.log(inputA); 
-   } else if (equalsClicked === true) {
+   } else if (equalsClicked === true && percentClicked === false) {
       tempInput = numButton.textContent;
       clearAll();
       inputA = tempInput;
       digits.textContent = inputA;
+      console.log(inputA); 
    } else {
       inputB += numButton.textContent;
       limitInputB();
@@ -158,7 +161,9 @@ numButton.forEach((numButton) => {
 
 opButton.forEach((opButton) => {
   opButton.addEventListener('click', () => {
-  if (inputB && result) {
+  if ((inputA ==='' && inputB ==='') || isNaN(result)) {
+      digits.textContent = 'enter numbers first'
+  } else if (inputB && result) {
       inputA = result;
       inputB = '';
       numB = 0;
@@ -177,6 +182,7 @@ opButton.forEach((opButton) => {
     } else {
       operator = opButton.textContent;
     }
+    console.log(operator);
   });
 });
 
@@ -195,18 +201,20 @@ equals.addEventListener('click', () => {
     operate(operator, numA, numB);
     digits.textContent = result;
     inputB = numB;
-  } else if (result && operator) {
+  } else if (result) {
     numA = result;
     operate(operator, numA, numB);
-    digits.textContent = result;
+      if (result.toString().length > 16) {
+         digits.textContent = 'that\'s too hard';
+        } else digits.textContent = result;      
   } else if (operator === '/' && numB === 0) {
     result = 'always and forever'
     digits.textContent = result;
   } else if ((numA === 0 && operator === '/') || ((numA === 0 || numB === 0) && (operator === 'x'))) {
     result = 0;
     digits.textContent = result;
-  } else if (isNaN(numB)) {
-    digits.textContent = 'having trouble?';
+  } else if (isNaN(numB) || isNaN(result)) {
+    digits.textContent = 'that won\'t work';
   } else if (numA && operator && numB) {
     operate(operator, numA, numB);
      if (result.toString().length > 16) {
@@ -216,6 +224,7 @@ equals.addEventListener('click', () => {
   } else {
     digits.textContent = '???';
   }
+  console.log(result);
 });
 
 
@@ -283,7 +292,18 @@ function clearAll() {
   equalsClicked = false;
   digits.textContent = '0';
   decimal.addEventListener('click', clickOnce);
-  console.log(inputA, inputB, operator);
+}
+
+
+function clearMost() {
+  inputA = '';
+  inputB = '';
+  numA = 0;
+  numB = 0;
+  operator = '';
+  result = 0;
+  equalsClicked = false;
+  decimal.addEventListener('click', clickOnce);
 }
 
 
