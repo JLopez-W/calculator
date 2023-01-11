@@ -22,17 +22,20 @@ let numA = 0;
 let numB = 0;
 let result = 0;
 let tempInput = '';
+let equalsClicked = false;
+
 
 
 
 posNegButton.addEventListener('click', () => {
-  if (result !== 0) {
-       result.toString();
-       result = '-'+result;
-       inputA = result;
-       inputB = '';
-       result = 0;
-       digits.textContent = inputA;      
+  if (result > 0) {
+       inputA = result.toString();
+       inputA = '-'+inputA;
+       clearForNeg();
+  } else if (result < 0) {
+       inputA = result.toString();
+       inputA = inputA.slice(1);
+       clearForNeg();
   } else if (operator === '' && (!inputA.includes('-'))) {
       inputA = '-'+inputA;
       digits.textContent = inputA;
@@ -47,6 +50,7 @@ posNegButton.addEventListener('click', () => {
       digits.textContent = inputB;
   }
 });
+
 
 
 decimal.addEventListener('click', clickOnce);
@@ -138,11 +142,10 @@ numButton.forEach((numButton) => {
       limitInputA();
       digits.textContent = inputA;
       console.log(inputA); 
-   } else if (result) {
-      tempInput += numButton.textContent;
+   } else if (equalsClicked === true) {
+      tempInput = numButton.textContent;
       clearAll();
       inputA = tempInput;
-      tempInput = '';
       digits.textContent = inputA;
    } else {
       inputB += numButton.textContent;
@@ -152,6 +155,8 @@ numButton.forEach((numButton) => {
     }
   });
 });
+// if there's a result and equals is true, ->
+//inputB/numB = 0; new input = inputA; operator ='';, equals =false;
 
 // now adding another equals after first equals doesn't work (result + num = .....)
 
@@ -175,6 +180,7 @@ opButton.forEach((opButton) => {
 
 
 equals.addEventListener('click', () => {
+  equalsClicked = true;
   numA = parseFloat(inputA);
   numB = parseFloat(inputB);
   if (inputA ==='') {
@@ -272,8 +278,18 @@ function clearAll() {
   numB = 0;
   operator = '';
   result = 0;
+  equalsClicked = false;
   digits.textContent = '0';
   decimal.addEventListener('click', clickOnce);
   console.log(inputA, inputB, operator);
+}
+
+
+function clearForNeg() {
+  inputB = '';
+  numB = 0;
+  result = 0;
+  operator = '';
+  digits.textContent = inputA;
 }
 
