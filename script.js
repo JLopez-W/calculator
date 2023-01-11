@@ -207,8 +207,11 @@ equals.addEventListener('click', () => {
       if (result.toString().length > 16) {
          digits.textContent = 'that\'s too hard';
         } else digits.textContent = result;      
-  } else if (operator === '/' && numB === 0) {
+  } else if (operator === '/' && numA > 0 && numB === 0) {
     result = 'always and forever'
+    digits.textContent = result;
+  } else if (operator === '/' && numA < 0 && numB === 0) {
+    result = 'never ever'
     digits.textContent = result;
   } else if ((numA === 0 && operator === '/') || ((numA === 0 || numB === 0) && (operator === 'x'))) {
     result = 0;
