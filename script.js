@@ -24,8 +24,7 @@ let result = 0;
 let tempInput = '';
 let equalsClicked = false;
 let percentClicked = false;
-
-
+let posNegClicked = false;
 
 
 posNegButton.addEventListener('click', () => {
@@ -50,6 +49,7 @@ posNegButton.addEventListener('click', () => {
       inputB = inputB.slice(1);
       digits.textContent = inputB;
   }
+      posNegClicked = true;
 });
 
 
@@ -144,8 +144,14 @@ numButton.forEach((numButton) => {
       limitInputA();
       digits.textContent = inputA;
       console.log(inputA); 
-   } else if (equalsClicked === true && percentClicked === false) {
+   } else if (equalsClicked === true && percentClicked === false && posNegClicked === false) {
       tempInput = numButton.textContent;
+      clearAll();
+      inputA = tempInput;
+      digits.textContent = inputA;
+      console.log(inputA); 
+  } else if (equalsClicked === true && percentClicked === false && posNegClicked === true) {
+      tempInput = inputA;
       clearAll();
       inputA = tempInput;
       digits.textContent = inputA;
@@ -204,9 +210,7 @@ equals.addEventListener('click', () => {
   } else if (result) {
     numA = result;
     operate(operator, numA, numB);
-      if (result.toString().length > 16) {
-         digits.textContent = 'that\'s too hard';
-        } else digits.textContent = result;      
+    checkLength();
   } else if (operator === '/' && numA > 0 && numB === 0) {
     result = 'always and forever'
     digits.textContent = result;
@@ -220,16 +224,12 @@ equals.addEventListener('click', () => {
     digits.textContent = 'that won\'t work';
   } else if (numA && operator && numB) {
     operate(operator, numA, numB);
-     if (result.toString().length > 16) {
-        result = 'that\'s too hard';
-        digits.textContent = result;
-        } else digits.textContent = result;
+    checkLength();
   } else {
     digits.textContent = '???';
   }
   console.log(result);
 });
-
 
 
 function operate(operator, numA, numB) {
@@ -293,6 +293,8 @@ function clearAll() {
   operator = '';
   result = 0;
   equalsClicked = false;
+  posNegClicked = false;
+  percentClicked = false;
   digits.textContent = '0';
   decimal.addEventListener('click', clickOnce);
 }
@@ -318,3 +320,9 @@ function clearForNeg() {
   digits.textContent = inputA;
 }
 
+function checkLength() {
+  if (result.toString().length > 16) {
+    result = 'that\'s too hard';
+    }
+    digits.textContent = result;
+}
