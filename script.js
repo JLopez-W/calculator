@@ -29,8 +29,8 @@ let newFirst = '';
 
 numButton.forEach((numButton) => {
   numButton.addEventListener('click', () => {
-    if (equalsClicked === true && lastButton === 'numButton') {
-      // for 'clearing' to start new chain while result is still on screen 
+    if ((equalsClicked === true && lastButton === 'numButton') || inputA.includes('o')) {
+      // for 'clearing' to start new chain while number result or error message is visible
       newFirst = numButton.textContent;
       clearAll();
       digits.textContent = newFirst;
@@ -94,6 +94,7 @@ opButton.forEach((opButton) => {
       numA = parseFloat(inputA);
       numB = parseFloat(inputB);
       operate(numA, operator, numB);
+      checkLength();
       digits.textContent = result;
       inputA = result;
       inputB = '';
