@@ -3,7 +3,6 @@ const digits = document.createTextNode('0');
 digits.className = 'text';
 numDisplay.appendChild(digits);
 
-
 const numButton = document.querySelectorAll('.number');
 const opButton = document.querySelectorAll('.operator');
 const clear = document.querySelector('#clear');
@@ -18,41 +17,141 @@ const backspace = document.querySelector('#backspace');
 let inputA = '';
 let operator = '';
 let inputB = '';
-let numA = 0;
-let numB = 0;
-let result = 0;
-let tempInput = '';
+let numA = null;
+let numB = null;
+let result = null;
+let temp1 = '';
+let temp2 = '';
 let equalsClicked = false;
-let percentClicked = false;
-let posNegClicked = false;
+let lastButton = '';
+let newFirst = '';
 
 
-posNegButton.addEventListener('click', () => {
-  if (result > 0) {
-       inputA = result.toString();
-       inputA = '-'+inputA;
-       clearForNeg();
-  } else if (result < 0) {
-       inputA = result.toString();
-       inputA = inputA.slice(1);
-       clearForNeg();
-  } else if (operator === '' && (!inputA.includes('-'))) {
-      inputA = '-'+inputA;
+numButton.forEach((numButton) => {
+  numButton.addEventListener('click', () => {
+    if (equalsClicked === true && lastButton === 'numButton') {
+      // for 'clearing' to start new chain while result is still on screen 
+      newFirst = numButton.textContent;
+      clearAll();
+      digits.textContent = newFirst;
+    } else if (newFirst) {
+      // for continuing inputA for new chain started in 'if' condition
+      inputA = newFirst;
+      newFirst = '';
+      inputA += numButton.textContent;
+      limitInputA();
       digits.textContent = inputA;
-  } else if (operator === '' && (inputA.includes('-'))) {
-      inputA = inputA.slice(1);
+      lastButton = 'numButton';
+    } else if (equalsClicked === true && lastButton === 'numButton' && newFirst === '') {
+      // for continuing new operation using previous equals result as inputA
+      temp1 = result;
+      temp2 = numButton.textContent;
+      clearMost();
+      inputA = temp1;
+      inputB = temp2;
+      digits.textContent = inputB;
+      lastButton = 'numButton';
+    } else if (operator === '') {
+      // inputA from start, or after clearAll
+      inputA += numButton.textContent;
+      limitInputA();
       digits.textContent = inputA;
-  } else if (operator && (!inputB.includes('-'))) {
-      inputB = '-'+inputB;
+      lastButton = 'numButton';
+    } else if (temp1 === inputA && temp2 === inputB) {
+      // for chaining a result to new operator without equals between
+      temp1 = numButton.textContent;
+      clearMost();
+      operator = '';
+      inputA = temp1;
+      digits.textContent = inputA;
+      lastButton = 'numButton';
+    } else if (operator) {
+      // inputB after operator is clicked
+      inputB += numButton.textContent;
+      limitInputB();
       digits.textContent = inputB;
-  } else if (operator === '' && (inputB.includes('-'))) {
-      inputB = inputB.slice(1);
-      digits.textContent = inputB;
-  }
-      posNegClicked = true;
+      lastButton = 'numButton';
+    }
+  });
+});
+
+opButton.forEach((opButton) => {
+  opButton.addEventListener('click', () => { 
+    lastButton = 'opButton';
+    if (inputA.includes('o')) {
+      // for clearing inputs when operator is first button clicked after message
+      digits.textContent = 'enter numbers first';
+      clearMost();
+      operator = '';
+    } else if (inputA === '' && inputB === '') {
+      // first two 'else if' for starting new chain, not continuing from a result
+      digits.textContent = 'enter numbers first';
+    } else if (inputA && inputB === '') {
+      operator = opButton.textContent;
+    } else if (inputA && inputB && equalsClicked === false) {
+      // for chaining operations before equals has been clicked
+      temp1 += opButton.textContent;
+      numA = parseFloat(inputA);
+      numB = parseFloat(inputB);
+      operate(numA, operator, numB);
+      digits.textContent = result;
+      inputA = result;
+      inputB = '';
+      operator = temp1;
+      temp1 = '';
+    } else if (equalsClicked === true) {
+      // for chaining operations after equals has been clicked
+      result = inputA;
+      inputB = '';
+      digits.textContent = inputA;
+      operator = opButton.textContent;
+      equalsClicked = false;
+    }
+  });
 });
 
 
+equals.addEventListener('click', () => {
+  numA = parseFloat(inputA);
+  numB = parseFloat(inputB);
+  if (inputA && operator && inputB === '') {
+    numB = numA;
+    operate(numA, operator, numB);
+    checkLength();
+    digits.textContent = result;
+    moveInput();
+  } else if (inputA && operator && inputB) {
+    operate(numA, operator, numB);
+    checkLength();
+    digits.textContent = result;
+    moveInput();
+  }
+  equalsClicked = true;
+  temp1 = result;
+});
+
+
+posNegButton.addEventListener('click', () => {
+  if (operator === '' || equalsClicked === true) {
+    inputA = inputA.toString();
+    if (inputA > 0) {
+      inputA = '-' + inputA;
+      clearForNeg();
+    } else if (inputA < 0) {
+      inputA = inputA.slice(1);
+      clearForNeg();
+    }
+  } else if (equalsClicked === false) {
+    inputB = inputB.toString();
+    if (!inputB.includes('-')) {
+      inputB = '-' + inputB;
+    } else if (inputB.includes('-')) {
+      inputB = inputB.slice(1);
+    }
+    digits.textContent = inputB;
+  }
+
+});
 
 decimal.addEventListener('click', clickOnce);
 function removeHandler() {
@@ -60,179 +159,68 @@ function removeHandler() {
 }
 function clickOnce() {
   if (operator === '' && (!inputA.includes('.'))) {
-     if (inputA ==='') {
+    if (inputA === '') {
       inputA += '0.';
-     } else {
-    inputA += '.';
-     }
-    digits.textContent = inputA;  
+    } else {
+      inputA += '.';
+    }
+    digits.textContent = inputA;
   } else if (operator && (!inputB.includes('.'))) {
-    if (inputB ==='') {
-        inputB += '0.';
-     } else {
-        inputB += '.';
-     }
+    if (inputB === '') {
+      inputB += '0.';
+    } else {
+      inputB += '.';
+    }
     digits.textContent = inputB;
   } else {
-   removeHandler();
- }
+    removeHandler();
+  }
 }
 
 percent.addEventListener('click', () => {
-  if (inputA && operator ==='') {
-    if (inputA === '0') {
-       inputA = parseFloat(inputA);
-       digits.textContent = inputA;
-     } else {
-       inputA = parseFloat(inputA) / 100;
-       digits.textContent = inputA;
-     }
-  } else if (inputB === '0') {
-       numA = 0;
-  } else if (result) {
-      inputA = parseFloat(result) / 100;
-      numA = inputA;
-      inputB = '';
-      result = 0;
+  if (inputA && operator === '') {
+    if (inputA !== null) {
+      inputA = parseFloat(inputA) / 100;
       digits.textContent = inputA;
-  } else if ((operator === '+' || operator === '-') && inputB) {
-    inputB = parseFloat(inputB) / inputA;
-    digits.textContent = inputB;
-  } else if ((operator === 'x' || operator === '/') && inputB) {
+    }
+  } else if (operator && inputB !== null) {
     inputB = parseFloat(inputB) / 100;
-    digits.textContent = inputB; 
-  
+    digits.textContent = inputB;
   }
-  percentClicked = true;
 });
 
 
 backspace.addEventListener('click', () => {
-  if (inputA && operator ==='') {
-      inputA = inputA.slice(0, -1);
-      digits.textContent = inputA;
-  } else if (inputB && result === 0) {
-      inputB = inputB.slice(0, -1);
-      digits.textContent = inputB; 
-  } else if (result) {
-      result = result.toString().slice(0, -1);
-      digits.textContent = result;
-      result = parseFloat(result);
-      inputA = result;
-      inputB = '';
-      digits.textContent = inputA;
+  if (inputA && inputB === '') {
+    inputA = inputA.slice(0, -1);
+    digits.textContent = inputA;
+  } else if (inputB && equalsClicked === false) {
+    inputB = inputB.slice(0, -1);
+    digits.textContent = inputB;
+  } else if (equalsClicked === true) {
+    inputA = digits.textContent;
+    inputA = inputA.slice(0, -1);
+    digits.textContent = inputA;
+    temp1 = inputA;
+    clearMost();
+    inputA = temp1;
   }
 });
 
 
 function limitInputA() {
-  if(inputA.length > 11) {
-      inputA = inputA.substring(0, 16);
+  if (inputA.length > 11) {
+    inputA = inputA.substring(0, 16);
   }
 }
 
 function limitInputB() {
-  if(inputB.length > 11) {
-      inputB = inputB.substring(0, 16);
+  if (inputB.length > 11) {
+    inputB = inputB.substring(0, 16);
   }
 }
 
-numButton.forEach((numButton) => {
-  numButton.addEventListener('click', () => {
-   if (operator === '') {
-      inputA += numButton.textContent;
-      limitInputA();
-      digits.textContent = inputA;
-      console.log(inputA); 
-   } else if (equalsClicked === true && percentClicked === false && posNegClicked === false) {
-      tempInput = numButton.textContent;
-      clearAll();
-      inputA = tempInput;
-      digits.textContent = inputA;
-      console.log(inputA); 
-  } else if (equalsClicked === true && percentClicked === false && posNegClicked === true) {
-      tempInput = inputA;
-      clearAll();
-      inputA = tempInput;
-      digits.textContent = inputA;
-      console.log(inputA); 
-   } else {
-      inputB += numButton.textContent;
-      limitInputB();
-      digits.textContent = inputB;
-      console.log(inputB);
-    }
-  });
-});
-
-opButton.forEach((opButton) => {
-  opButton.addEventListener('click', () => {
-  if ((inputA ==='' && inputB ==='') || isNaN(result)) {
-      digits.textContent = 'enter numbers first'
-  } else if (inputB && result) {
-      inputA = result;
-      inputB = '';
-      numB = 0;
-      operator = opButton.textContent;
-      equalsClicked = false;
-  } else if (inputB) {
-      numA = parseFloat(inputA);
-      numB = parseFloat(inputB);
-      operate(operator, numA, numB);
-      numA = result;
-      inputA = result;
-      digits.textContent = result; 
-      numB = 0;
-      inputB = '';
-      operator = opButton.textContent;
-    } else {
-      operator = opButton.textContent;
-    }
-    console.log(operator);
-  });
-});
-
-
-equals.addEventListener('click', () => {
-  equalsClicked = true;
-  numA = parseFloat(inputA);
-  numB = parseFloat(inputB);
-  if (inputA ==='') {
-    digits.textContent = '0';
-  } else if (numA && operator === '' && inputB === '') {
-    result = numA;
-    digits.textContent = result;
-  } else if (numA && operator && inputB === '') {
-    numB = numA;
-    operate(operator, numA, numB);
-    digits.textContent = result;
-    inputB = numB;
-  } else if (result) {
-    numA = result;
-    operate(operator, numA, numB);
-    checkLength();
-  } else if (operator === '/' && numA > 0 && numB === 0) {
-    result = 'always and forever'
-    digits.textContent = result;
-  } else if (operator === '/' && numA < 0 && numB === 0) {
-    result = 'never ever'
-    digits.textContent = result;
-  } else if ((numA === 0 && operator === '/') || ((numA === 0 || numB === 0) && (operator === 'x'))) {
-    result = 0;
-    digits.textContent = result;
-  } else if (isNaN(numB) || isNaN(result)) {
-    digits.textContent = 'that won\'t work';
-  } else if (numA && operator && numB) {
-    operate(operator, numA, numB);
-    checkLength();
-  } else {
-    digits.textContent = '???';
-  }
-  console.log(result);
-});
-
-
-function operate(operator, numA, numB) {
+function operate(numA, operator, numB) {
   if (operator === '+') {
     add(numA, numB);
     return result;
@@ -273,56 +261,59 @@ function multiply(numA, numB) {
 };
 
 function divide(numA, numB) {
-  if ((numA / numB).isInteger) {
+  if (numB === 0) {
+    result = 'no ♥';
+  } else if ((numA / numB).isInteger) {
     result = (numA / numB)
   } else {
     result = (numA / numB).toFixed(10) * 1
   }
 };
 
-
-function clearDisplay() {
-  digits.textContent = '0';
-}
-
 function clearAll() {
   inputA = '';
-  inputB = '';
-  numA = 0;
-  numB = 0;
   operator = '';
-  result = 0;
+  inputB = '';
+  numA = null;
+  numB = null;
+  result = null;
+  temp1 = '';
+  temp2 = '';
   equalsClicked = false;
-  posNegClicked = false;
-  percentClicked = false;
+  lastButton = '';
   digits.textContent = '0';
   decimal.addEventListener('click', clickOnce);
 }
-
 
 function clearMost() {
   inputA = '';
   inputB = '';
-  numA = 0;
-  numB = 0;
-  operator = '';
-  result = 0;
+  numA = null;
+  numB = null;
+  result = null;
   equalsClicked = false;
   decimal.addEventListener('click', clickOnce);
 }
 
+function moveInput() {
+  temp1 = result;
+  temp2 = numB;
+  clearMost();
+  inputA = temp1;
+  inputB = temp2;
+}
 
 function clearForNeg() {
   inputB = '';
-  numB = 0;
-  result = 0;
+  numB = null;
+  result = null;
   operator = '';
   digits.textContent = inputA;
 }
 
 function checkLength() {
-  if (result.toString().length > 16) {
+  if (result.toString().length > 16 || result.toString().includes('e')) {
     result = 'that\'s too hard';
-    }
-    digits.textContent = result;
+  }
+  digits.textContent = result;
 }
