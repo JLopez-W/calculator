@@ -26,22 +26,20 @@ let equalsClicked = false;
 let lastButton = '';
 let newFirst = '';
 
-
 numButton.forEach((numButton) => {
   numButton.addEventListener('click', () => {
-    if ((equalsClicked === true && lastButton === 'numButton') || inputA.includes('o')) {
+    if (equalsClicked === true && lastButton === 'numButton') {
       // for 'clearing' to start new chain while number result or error message is visible
       newFirst = numButton.textContent;
       clearAll();
-      digits.textContent = newFirst;
-    } else if (newFirst) {
-      // for continuing inputA for new chain started in 'if' condition
       inputA = newFirst;
+      digits.textContent = inputA;
+    } else if (newFirst && operator === '') {
+      // for continuing inputA for new chain started in 'if' condition
       newFirst = '';
       inputA += numButton.textContent;
       limitInputA();
       digits.textContent = inputA;
-      lastButton = 'numButton';
     } else if (equalsClicked === true && lastButton === 'numButton' && newFirst === '') {
       // for continuing new operation using previous equals result as inputA
       temp1 = result;
@@ -50,42 +48,36 @@ numButton.forEach((numButton) => {
       inputA = temp1;
       inputB = temp2;
       digits.textContent = inputB;
-      lastButton = 'numButton';
     } else if (operator === '') {
       // inputA from start, or after clearAll
       inputA += numButton.textContent;
       limitInputA();
       digits.textContent = inputA;
-      lastButton = 'numButton';
     } else if (temp1 === inputA && temp2 === inputB) {
-      // for chaining a result to new operator without equals between
+      // for chaining a result to new operator without clicking equals 
       temp1 = numButton.textContent;
       clearMost();
       operator = '';
       inputA = temp1;
       digits.textContent = inputA;
-      lastButton = 'numButton';
     } else if (operator) {
       // inputB after operator is clicked
       inputB += numButton.textContent;
       limitInputB();
       digits.textContent = inputB;
-      lastButton = 'numButton';
     }
+     lastButton = 'numButton';
   });
 });
 
 opButton.forEach((opButton) => {
-  opButton.addEventListener('click', () => { 
+  opButton.addEventListener('click', () => {
     lastButton = 'opButton';
-    if (inputA.includes('o')) {
-      // for clearing inputs when operator is first button clicked after message
+    if ((inputA === '' && inputB === '' && newFirst === '') || (isNaN(inputA))) {
+      // first if/else for starting new chain, not continuing from a result
+      clearAll();
       digits.textContent = 'enter numbers first';
-      clearMost();
-      operator = '';
-    } else if (inputA === '' && inputB === '') {
-      // first two 'else if' for starting new chain, not continuing from a result
-      digits.textContent = 'enter numbers first';
+      //half to click operator twice to get message when result has 'too hard'
     } else if (inputA && inputB === '') {
       operator = opButton.textContent;
     } else if (inputA && inputB && equalsClicked === false) {
@@ -151,13 +143,13 @@ posNegButton.addEventListener('click', () => {
     }
     digits.textContent = inputB;
   }
-
 });
 
 decimal.addEventListener('click', clickOnce);
 function removeHandler() {
   decimal.removeEventListener('click', clickOnce);
 }
+
 function clickOnce() {
   if (operator === '' && (!inputA.includes('.'))) {
     if (inputA === '') {
@@ -318,4 +310,3 @@ function checkLength() {
   }
   digits.textContent = result;
 }
-
