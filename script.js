@@ -90,7 +90,7 @@ opButton.forEach((opButton) => {
       operator = opButton.textContent;
     } else if (inputA && inputB && equalsClicked === false) {
       // for chaining operations before equals has been clicked
-      temp1 += opButton.textContent;
+      temp1 = opButton.textContent;
       numA = parseFloat(inputA);
       numB = parseFloat(inputB);
       operate(numA, operator, numB);
@@ -318,3 +318,4 @@ function checkLength() {
   }
   digits.textContent = result;
 }
+
