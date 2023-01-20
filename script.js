@@ -201,15 +201,21 @@ backspace.addEventListener('click', (event) => {
        event.preventDefault();
      } else {
        inputA = inputA.slice(0, -1);
+       if (inputA === '') {
+         inputA = '0';
+       }
        digits.textContent = inputA;
-     }
+    }
   } else if (inputB && equalsClicked === false) {
      if (inputB === '0') {
        event.preventDefault();
      } else { 
       inputB = inputB.slice(0, -1);
-      digits.textContent = inputB;
-    }
+     if (inputB === '') {
+         inputB = '0';
+       }
+       digits.textContent = inputB;
+     }
   } else if (equalsClicked === true) {
     inputA = digits.textContent;
      if (inputA === '0') {
@@ -223,6 +229,7 @@ backspace.addEventListener('click', (event) => {
      inputA = temp1;
   }
 });
+
 
 function limitInputA() {
   if (inputA.length > 11) {
