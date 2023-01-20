@@ -30,10 +30,11 @@ let newFirst = '';
 
 
 numButton.forEach((numButton) => {
-  numButton.addEventListener('click', () => { 
+  numButton.addEventListener('click', (event) => { 
     if (((digits.textContent === '0') || 
          (operator && inputB === '' ) || 
-         (equalsClicked === true)) && 
+         (equalsClicked === true) || 
+         (isNaN(digits.textContent))) && 
          numButton.textContent === '0') {
          event.preventDefault();
     } else if (equalsClicked === true && lastButton === 'numButton') {
@@ -179,8 +180,10 @@ function clickOnce() {
   }
 }
 
-percent.addEventListener('click', () => {
-  if ((inputA && operator === '') || (inputB === temp2)) {
+percent.addEventListener('click', (event) => {
+  if (isNaN(digits.textContent)) {
+    event.preventDefault();
+  } else if ((inputA && operator === '') || (inputB === temp2)) {
       inputA = parseFloat(inputA) / 100;
       digits.textContent = inputA;
   } else if (operator && inputB) {
