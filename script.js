@@ -197,11 +197,14 @@ percent.addEventListener('click', (event) => {
 
 backspace.addEventListener('click', (event) => {
   if (inputA && inputB === '') {
-     if (inputA === '0') {
+       if (inputA === '0') {
        event.preventDefault();
-     } else {
-       inputA = inputA.slice(0, -1);
-       if (inputA === '') {
+      } else if (inputA.includes('n')) {
+         event.preventDefault();
+         clearAll();        
+      } else {
+        inputA = inputA.slice(0, -1);
+        if (inputA === '') {
          inputA = '0';
        }
        digits.textContent = inputA;
@@ -217,9 +220,12 @@ backspace.addEventListener('click', (event) => {
        digits.textContent = inputB;
      }
   } else if (equalsClicked === true) {
-    inputA = digits.textContent;
-     if (inputA === '0') {
+      inputA = digits.textContent;
+     if (inputA === '0' || inputA.includes('o')) {
        event.preventDefault();
+       if (inputA.includes('o')) {
+          inputA = 'enter numbers first';
+        }
      } else {
        inputA = inputA.slice(0, -1);
      }
