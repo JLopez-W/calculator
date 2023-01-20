@@ -195,23 +195,34 @@ percent.addEventListener('click', (event) => {
 });
 
 
-backspace.addEventListener('click', () => {
+backspace.addEventListener('click', (event) => {
   if (inputA && inputB === '') {
-    inputA = inputA.slice(0, -1);
-    digits.textContent = inputA;
+     if (inputA === '0') {
+       event.preventDefault();
+     } else {
+       inputA = inputA.slice(0, -1);
+       digits.textContent = inputA;
+     }
   } else if (inputB && equalsClicked === false) {
-    inputB = inputB.slice(0, -1);
-    digits.textContent = inputB;
+     if (inputB === '0') {
+       event.preventDefault();
+     } else { 
+      inputB = inputB.slice(0, -1);
+      digits.textContent = inputB;
+    }
   } else if (equalsClicked === true) {
     inputA = digits.textContent;
-    inputA = inputA.slice(0, -1);
-    digits.textContent = inputA;
-    temp1 = inputA;
-    clearMost();
-    inputA = temp1;
+     if (inputA === '0') {
+       event.preventDefault();
+     } else {
+       inputA = inputA.slice(0, -1);
+     }
+     digits.textContent = inputA;
+     temp1 = inputA;
+     clearMost();
+     inputA = temp1;
   }
 });
-
 
 function limitInputA() {
   if (inputA.length > 11) {
