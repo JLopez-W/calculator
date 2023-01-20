@@ -13,6 +13,8 @@ const posNegButton = document.querySelector('#posNeg');
 const percent = document.querySelector('#percent');
 const equals = document.querySelector('#equals');
 const backspace = document.querySelector('#backspace');
+const zeroButton = document.querySelector("#zero");
+
 
 let inputA = '';
 let operator = '';
@@ -26,9 +28,15 @@ let equalsClicked = false;
 let lastButton = '';
 let newFirst = '';
 
+
 numButton.forEach((numButton) => {
-  numButton.addEventListener('click', () => {
-    if (equalsClicked === true && lastButton === 'numButton') {
+  numButton.addEventListener('click', () => { 
+    if (((digits.textContent === '0') || 
+         (operator && inputB === '' ) || 
+         (equalsClicked === true)) && 
+         numButton.textContent === '0') {
+         event.preventDefault();
+    } else if (equalsClicked === true && lastButton === 'numButton') {
       // for 'clearing' to start new chain while number result or error message is visible
       newFirst = numButton.textContent;
       clearAll();
@@ -145,6 +153,7 @@ posNegButton.addEventListener('click', () => {
   }
 });
 
+
 decimal.addEventListener('click', clickOnce);
 function removeHandler() {
   decimal.removeEventListener('click', clickOnce);
@@ -179,6 +188,7 @@ percent.addEventListener('click', () => {
     digits.textContent = inputB;
   }
 });
+
 
 backspace.addEventListener('click', () => {
   if (inputA && inputB === '') {
