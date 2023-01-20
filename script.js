@@ -171,17 +171,14 @@ function clickOnce() {
 }
 
 percent.addEventListener('click', () => {
-  if (inputA && operator === '') {
-    if (inputA !== null) {
+  if ((inputA && operator === '') || (inputB === temp2)) {
       inputA = parseFloat(inputA) / 100;
       digits.textContent = inputA;
-    }
-  } else if (operator && inputB !== null) {
+  } else if (operator && inputB) {
     inputB = parseFloat(inputB) / 100;
     digits.textContent = inputB;
   }
 });
-
 
 backspace.addEventListener('click', () => {
   if (inputA && inputB === '') {
