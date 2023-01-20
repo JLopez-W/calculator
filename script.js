@@ -38,6 +38,9 @@ numButton.forEach((numButton) => {
     } else if (newFirst && operator === '') {
       // for continuing inputA for new chain started in 'if' condition
       newFirst = '';
+      if (inputA === '0') {
+        inputA = inputA.slice(0, -1);
+       }
       inputA += numButton.textContent;
       limitInputA();
       digits.textContent = inputA;
