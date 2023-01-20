@@ -28,7 +28,7 @@ let newFirst = '';
 
 
 numButton.forEach((numButton) => {
-  numButton.addEventListener('click', (event) => {   
+  numButton.addEventListener('click', (event) => { 
   if (equalsClicked === true && lastButton === 'numButton') {
       // for 'clearing' to start new chain while number result or error message is visible
       newFirst = numButton.textContent;
@@ -51,6 +51,9 @@ numButton.forEach((numButton) => {
       digits.textContent = inputB;
     } else if (operator === '') {
       // inputA from start, or after clearAll
+       if (inputA === '0') {
+        inputA = inputA.slice(0, -1);
+       }
       inputA += numButton.textContent;
       limitInputA();
       digits.textContent = inputA;
@@ -63,6 +66,9 @@ numButton.forEach((numButton) => {
       digits.textContent = inputA;
     } else if (operator) {
       // inputB after operator is clicked
+       if (inputB === '0') {
+          inputB = inputB.slice(0, -1);
+        }
       inputB += numButton.textContent;
       limitInputB();
       digits.textContent = inputB;
@@ -71,6 +77,7 @@ numButton.forEach((numButton) => {
   });
 });
 
+
 opButton.forEach((opButton) => {
   opButton.addEventListener('click', () => {
     lastButton = 'opButton';
@@ -78,7 +85,6 @@ opButton.forEach((opButton) => {
       // first if/else for starting new chain, not continuing from a result
       clearAll();
       digits.textContent = 'enter numbers first';
-      //half to click operator twice to get message when result has 'too hard'
     } else if (inputA && inputB === '') {
       operator = opButton.textContent;
     } else if (inputA && inputB && equalsClicked === false) {
@@ -183,8 +189,8 @@ percent.addEventListener('click', (event) => {
       inputA = parseFloat(inputA) / 100;
       digits.textContent = inputA;
   } else if (operator && inputB) {
-    inputB = parseFloat(inputB) / 100;
-    digits.textContent = inputB;
+     inputB = parseFloat(inputB) / 100;
+     digits.textContent = inputB;
   }
 });
 
