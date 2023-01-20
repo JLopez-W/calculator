@@ -13,8 +13,6 @@ const posNegButton = document.querySelector('#posNeg');
 const percent = document.querySelector('#percent');
 const equals = document.querySelector('#equals');
 const backspace = document.querySelector('#backspace');
-const zeroButton = document.querySelector("#zero");
-
 
 let inputA = '';
 let operator = '';
@@ -30,14 +28,8 @@ let newFirst = '';
 
 
 numButton.forEach((numButton) => {
-  numButton.addEventListener('click', (event) => { 
-    if (((digits.textContent === '0') || 
-         (operator && inputB === '' ) || 
-         (equalsClicked === true) || 
-         (isNaN(digits.textContent))) && 
-         numButton.textContent === '0') {
-         event.preventDefault();
-    } else if (equalsClicked === true && lastButton === 'numButton') {
+  numButton.addEventListener('click', (event) => {   
+  if (equalsClicked === true && lastButton === 'numButton') {
       // for 'clearing' to start new chain while number result or error message is visible
       newFirst = numButton.textContent;
       clearAll();
@@ -161,14 +153,18 @@ function removeHandler() {
 }
 
 function clickOnce() {
-  if (operator === '' && (!inputA.includes('.'))) {
-    if (inputA === '') {
+  if (equalsClicked === true) {
+      clearAll();    
       inputA += '0.';
-    } else {
+      digits.textContent = inputA;
+  } else if (operator === '' && (!String(inputA).includes('.'))) {
+      if (inputA === '') {
+      inputA += '0.';
+     } else {
       inputA += '.';
-    }
-    digits.textContent = inputA;
-  } else if (operator && (!inputB.includes('.'))) {
+     }
+     digits.textContent = inputA;
+  } else if (operator && (!String(inputB).includes('.'))) {
     if (inputB === '') {
       inputB += '0.';
     } else {
