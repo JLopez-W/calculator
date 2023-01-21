@@ -197,48 +197,52 @@ percent.addEventListener('click', (event) => {
   }
 });
 
-
 backspace.addEventListener('click', (event) => {
   if (inputA && inputB === '') {
-       if (inputA === '0') {
-       event.preventDefault();
-      } else if (inputA.includes('n')) {
-         event.preventDefault();
-         clearAll();        
-      } else {
-        inputA = inputA.slice(0, -1);
-        if (inputA === '') {
-         inputA = '0';
-       }
-       digits.textContent = inputA;
+    if (inputA === '0') {
+      event.preventDefault();
+    } else if (inputA.includes('n')) {
+      event.preventDefault();
+      clearAll();
+    } else if (inputA.length === 2 && inputA.includes('-')) {
+      inputA = '0';
+      digits.textContent = inputA;
+    } else {
+      inputA = inputA.slice(0, -1);
+      if (inputA === '') {
+        inputA = '0';
+      }
+      digits.textContent = inputA;
     }
   } else if (inputB && equalsClicked === false) {
-     if (inputB === '0') {
-       event.preventDefault();
-     } else { 
+    if (inputB === '0') {
+      event.preventDefault();
+    } else if (inputB.length === 2 && inputB.includes('-')) {
+      inputB = '0';
+      digits.textContent = inputB;
+    } else {
       inputB = inputB.slice(0, -1);
-     if (inputB === '') {
-         inputB = '0';
-       }
-       digits.textContent = inputB;
-     }
+      if (inputB === '') {
+        inputB = '0';
+      }
+      digits.textContent = inputB;
+    }
   } else if (equalsClicked === true) {
-      inputA = digits.textContent;
-     if (inputA === '0' || inputA.includes('o')) {
-       event.preventDefault();
-       if (inputA.includes('o')) {
-          inputA = 'enter numbers first';
-        }
-     } else {
-       inputA = inputA.slice(0, -1);
-     }
-     digits.textContent = inputA;
-     temp1 = inputA;
-     clearMost();
-     inputA = temp1;
+    inputA = digits.textContent;
+    if (inputA === '0' || inputA.includes('o')) {
+      event.preventDefault();
+      if (inputA.includes('o')) {
+        inputA = 'enter numbers first';
+      }
+    } else {
+      inputA = inputA.slice(0, -1);
+    }
+    digits.textContent = inputA;
+    temp1 = inputA;
+    clearMost();
+    inputA = temp1;
   }
 });
-
 
 function limitInputA() {
   if (inputA.length > 11) {
