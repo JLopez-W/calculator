@@ -53,8 +53,10 @@ numButton.forEach((numButton) => {
       inputB = temp2;
       digits.textContent = inputB;
     } else if (operator === '') {
-      // inputA from start, or after clearAll
-      if (inputA === '0') {
+      // inputA from start, or after clearAll, or with error on display
+      if (inputA.includes('o')) {
+        inputA = '';
+      } else if (inputA === '0') {
         inputA = inputA.slice(0, -1);
       }
       inputA += numButton.textContent;
@@ -118,7 +120,6 @@ equals.addEventListener('click', () => {
   if (inputA === 0) {
     inputA = String(inputA);
   }
-  // calculator will not read 0 as a number to calculate unless it's a string first
   numA = parseFloat(inputA);
   numB = parseFloat(inputB);
   if (inputA && operator && inputB === '') {
@@ -136,6 +137,7 @@ equals.addEventListener('click', () => {
   equalsClicked = true;
   temp1 = result;
 });
+
 
 posNegButton.addEventListener('click', () => {
   if (operator === '' || equalsClicked === true) {
@@ -157,6 +159,7 @@ posNegButton.addEventListener('click', () => {
     digits.textContent = inputB;
   }
 });
+
 
 decimal.addEventListener('click', clickOnce);
 function removeHandler() {
@@ -198,6 +201,7 @@ percent.addEventListener('click', (event) => {
     digits.textContent = inputB;
   }
 });
+
 
 backspace.addEventListener('click', (event) => {
   if (inputA && inputB === '') {
@@ -355,14 +359,3 @@ function checkLength() {
   }
   digits.textContent = result;
 }
-
-
-numButton.addEventListener('keydown', (event) => {
-  switch (event.key) {
-    case '1': 
-    document.getElementById('#one').click();
-    break;
- }
-  // Cancel the default action to avoid it being handled twice
-  event.preventDefault();
-}, true);
