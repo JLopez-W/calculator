@@ -28,8 +28,8 @@ let newFirst = '';
 
 
 numButton.forEach((numButton) => {
-  numButton.addEventListener('click', (event) => { 
-  if (equalsClicked === true && lastButton === 'numButton') {
+  numButton.addEventListener('click', () => {
+    if (equalsClicked === true && lastButton === 'numButton') {
       // for 'clearing' to start new chain while number result or error message is visible
       newFirst = numButton.textContent;
       clearAll();
@@ -40,7 +40,7 @@ numButton.forEach((numButton) => {
       newFirst = '';
       if (inputA === '0') {
         inputA = inputA.slice(0, -1);
-       }
+      }
       inputA += numButton.textContent;
       limitInputA();
       digits.textContent = inputA;
@@ -54,9 +54,9 @@ numButton.forEach((numButton) => {
       digits.textContent = inputB;
     } else if (operator === '') {
       // inputA from start, or after clearAll
-       if (inputA === '0') {
+      if (inputA === '0') {
         inputA = inputA.slice(0, -1);
-       }
+      }
       inputA += numButton.textContent;
       limitInputA();
       digits.textContent = inputA;
@@ -69,14 +69,14 @@ numButton.forEach((numButton) => {
       digits.textContent = inputA;
     } else if (operator) {
       // inputB after operator is clicked
-       if (inputB === '0') {
-          inputB = inputB.slice(0, -1);
-        }
+      if (inputB === '0') {
+        inputB = inputB.slice(0, -1);
+      }
       inputB += numButton.textContent;
       limitInputB();
       digits.textContent = inputB;
     }
-     lastButton = 'numButton';
+    lastButton = 'numButton';
   });
 });
 
@@ -115,6 +115,10 @@ opButton.forEach((opButton) => {
 
 
 equals.addEventListener('click', () => {
+  if (inputA === 0) {
+    inputA = String(inputA);
+  }
+  // calculator will not read 0 as a number to calculate unless it's a string first
   numA = parseFloat(inputA);
   numB = parseFloat(inputB);
   if (inputA && operator && inputB === '') {
@@ -132,7 +136,6 @@ equals.addEventListener('click', () => {
   equalsClicked = true;
   temp1 = result;
 });
-
 
 posNegButton.addEventListener('click', () => {
   if (operator === '' || equalsClicked === true) {
@@ -155,7 +158,6 @@ posNegButton.addEventListener('click', () => {
   }
 });
 
-
 decimal.addEventListener('click', clickOnce);
 function removeHandler() {
   decimal.removeEventListener('click', clickOnce);
@@ -163,16 +165,16 @@ function removeHandler() {
 
 function clickOnce() {
   if (equalsClicked === true) {
-      clearAll();    
-      inputA += '0.';
-      digits.textContent = inputA;
+    clearAll();
+    inputA += '0.';
+    digits.textContent = inputA;
   } else if (operator === '' && (!String(inputA).includes('.'))) {
-      if (inputA === '') {
+    if (inputA === '') {
       inputA += '0.';
-     } else {
+    } else {
       inputA += '.';
-     }
-     digits.textContent = inputA;
+    }
+    digits.textContent = inputA;
   } else if (operator && (!String(inputB).includes('.'))) {
     if (inputB === '') {
       inputB += '0.';
@@ -189,11 +191,11 @@ percent.addEventListener('click', (event) => {
   if (isNaN(digits.textContent)) {
     event.preventDefault();
   } else if ((inputA && operator === '') || (inputB === temp2)) {
-      inputA = parseFloat(inputA) / 100;
-      digits.textContent = inputA;
+    inputA = parseFloat(inputA) / 100;
+    digits.textContent = inputA;
   } else if (operator && inputB) {
-     inputB = parseFloat(inputB) / 100;
-     digits.textContent = inputB;
+    inputB = parseFloat(inputB) / 100;
+    digits.textContent = inputB;
   }
 });
 
@@ -353,3 +355,14 @@ function checkLength() {
   }
   digits.textContent = result;
 }
+
+
+numButton.addEventListener('keydown', (event) => {
+  switch (event.key) {
+    case '1': 
+    document.getElementById('#one').click();
+    break;
+ }
+  // Cancel the default action to avoid it being handled twice
+  event.preventDefault();
+}, true);
