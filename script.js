@@ -55,9 +55,9 @@ numButton.forEach((numButton) => {
       inputA = temp1;
       inputB = temp2;
       digits.textContent = inputB;
-    } else if (operator === '') {
+    } else if (operator === '' || String(inputA).includes('n')) {
       // inputA from start, or after clearAll, or with error on display
-      if (inputA.includes('o')) {
+      if (String(inputA).includes('o') || String(inputA).includes('n')) {
         inputA = '';
       } else if (inputA === '0') {
         inputA = inputA.slice(0, -1);
@@ -119,10 +119,13 @@ opButton.forEach((opButton) => {
 });
 
 
-equals.addEventListener('click', () => {
+equals.addEventListener('click', (event) => {
   if (inputA === 0) {
     inputA = String(inputA);
-  }
+  } else if (isNaN(inputA)) {
+    event.preventDefault();
+    clearAll();
+  } 
   numA = parseFloat(inputA);
   numB = parseFloat(inputB);
   if (inputA && operator && inputB === '') {
@@ -362,7 +365,7 @@ function checkLength() {
   if (result.toString().length > 16 || result.toString().includes('e')) {
     result = 'no ♥ that\'s too hard';
   }
-  digits.textContent = result;
+    digits.textContent = result;
 }
     
 toggle.addEventListener('click', () => {  
