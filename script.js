@@ -194,7 +194,7 @@ function clickOnce() {
 }
 
 percent.addEventListener('click', (event) => {
-  if (isNaN(digits.textContent)) {
+  if (isNaN(digits.textContent) || digits.textContent === '0') {
     event.preventDefault();
   } else if ((inputA && operator === '') || (inputB === temp2)) {
     inputA = parseFloat(inputA) / 100;
