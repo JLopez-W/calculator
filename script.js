@@ -1,3 +1,6 @@
+const toggle = document.querySelector('#toggle');
+document.documentElement.setAttribute('theme', 'dark');
+
 const numDisplay = document.querySelector('#display');
 const digits = document.createTextNode('0');
 digits.className = 'text';
@@ -355,7 +358,16 @@ function clearForNeg() {
 
 function checkLength() {
   if (result.toString().length > 16 || result.toString().includes('e')) {
-    result = 'that\'s too hard';
+    result = 'no ♥ that\'s too hard';
   }
   digits.textContent = result;
 }
+    
+toggle.addEventListener('click', () => {  
+  const currentTheme = document.documentElement.getAttribute('theme');
+  if (currentTheme === 'dark') {
+       document.documentElement.setAttribute('theme', 'light');
+    } else if (currentTheme === 'light') {    
+       document.documentElement.setAttribute('theme', 'dark');
+    }
+});
