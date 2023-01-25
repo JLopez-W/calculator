@@ -1,6 +1,6 @@
 # Calculator
 
-## A calculator that can perform all of the basic math functions usually found in simple calculators
+## A calculator that can perform all of the basic math functions of simple calculators
 
 The final assignment from the Foundations course in The Odin Project.
 The aim of this project was to combine all of the skills practiced throughout the foundations course, including HTML, CSS, and JavaScript.
